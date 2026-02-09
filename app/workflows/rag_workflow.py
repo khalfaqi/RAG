@@ -10,7 +10,6 @@ class GraphState(TypedDict):
 
 class RAGWorkflow:
     def __init__(self, document_store: DocumentStore, embedding_service: EmbeddingService):
-        # Inject semua dependency melalui constructor
         self.document_store = document_store
         self.embedding_service = embedding_service
         self.workflow = self._build_graph()
@@ -19,7 +18,6 @@ class RAGWorkflow:
         query = state.get("question", "")
         emb = self.embedding_service.get_embedding(query)
         
-        # Logika pencarian diabstraksi oleh vector_store
         results = self.document_store.search(query=query, embedding=emb)
         
         return {"context": results}

@@ -43,11 +43,9 @@ files = [
     "requirements.txt",
 ]
 
-# Buat folder
 for folder in folders:
     os.makedirs(folder, exist_ok=True)
 
-# Buat file kosong jika belum ada
 for file in files:
     if not os.path.exists(file):
         with open(file, "w", encoding="utf-8") as f:

@@ -8,24 +8,22 @@ from app.core.config import settings
 
 app = FastAPI()
 
-@app.post("/add")
+@app.post("/add") #add docs or data
 def add_document(
     req: DocumentRequest, 
     doc_store: DocumentStore = Depends(get_document_store),
     embed_service: EmbeddingService = Depends(get_embedding_service)
 ):
-    # Proses tetap sama, tapi instance didapat dari Depends
     vector = embed_service.get_embedding(req.text)
     doc_id = doc_store.add_document(req.text, vector)
     
     return {"id": doc_id, "status": "added"}
 
-@app.post("/ask")
+@app.post("/ask") #ask question
 def ask_question(
     req: QuestionRequest,
     rag: RAGWorkflow = Depends(get_rag_workflow)
 ):
-    # Endpoint hanya memanggil workflow yang sudah jadi
     result = rag.workflow.invoke({"question": req.question})
     
     return {
